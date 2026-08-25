@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+
+# Env files (never commit secrets)
+.env
+.env.*
+!.env.example
+
+# Terraform (once infra/ exists)
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+
+# Claude memory file
+memory.txt
