@@ -6,13 +6,27 @@
 .env.*
 !.env.example
 
-# Terraform (once infra/ exists)
+# Terraform
 **/.terraform/
 *.tfstate
 *.tfstate.*
 *.tfvars
+*.tfvars.json
 !*.tfvars.example
+# crash.log can contain variable values and state fragments
+crash.log
+crash.*.log
+# local-only overrides
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
 
 # Claude memory file
 CLAUDE.md
 memory.txt
+
+#other unnecessary files
+backup_codes.png
