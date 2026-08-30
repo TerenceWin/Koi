@@ -58,7 +58,7 @@ Actions **repository variables** (Settings → Secrets and variables → Actions
 | Repo variable | From output |
 | --- | --- |
 | `GCP_PROJECT_ID` | your project ID |
-| `GCP_REGION` | `us-central1` |
+| `GCP_REGION` | `asia-northeast1` |
 | `GCP_ARTIFACT_REPO` | `artifact_registry_repo` |
 | `GCP_WIF_PROVIDER` | `workload_identity_provider` |
 | `GCP_CICD_SA_EMAIL` | `cicd_service_account_email` |

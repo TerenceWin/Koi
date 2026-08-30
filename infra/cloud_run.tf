@@ -4,6 +4,10 @@ resource "google_cloud_run_v2_service" "backend" {
   location = var.region
   ingress  = "INGRESS_TRAFFIC_ALL"
 
+  # Provider default is true, which blocks `terraform destroy` and any
+  # replacement. False keeps teardown easy while this is pre-production.
+  deletion_protection = false
+
   template {
     service_account = google_service_account.backend_run.email
 
@@ -80,7 +84,15 @@ resource "google_cloud_run_v2_service" "backend" {
     ignore_changes = [template[0].containers[0].image]
   }
 
-  depends_on = [google_project_service.apis]
+  # The containers reference the secret *containers*, which creates no
+  # dependency on their *versions* — so without this, Terraform starts the
+  # service in parallel with version creation and the mount fails to resolve
+  # "latest". Must depend on the versions, not just the secrets.
+  depends_on = [
+    google_project_service.apis,
+    google_secret_manager_secret_version.db_password,
+    google_secret_manager_secret_version.claude_api_key_placeholder,
+  ]
 }
 
 resource "google_cloud_run_v2_service" "frontend" {
@@ -88,6 +100,8 @@ resource "google_cloud_run_v2_service" "frontend" {
   name     = "${var.name_prefix}-frontend"
   location = var.region
   ingress  = "INGRESS_TRAFFIC_ALL"
+
+  deletion_protection = false
 
   template {
     service_account = google_service_account.frontend_run.email

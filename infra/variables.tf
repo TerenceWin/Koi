@@ -5,8 +5,8 @@ variable "project_id" {
 
 variable "region" {
   type        = string
-  description = "Primary GCP region for all regional resources."
-  default     = "us-central1"
+  description = "Primary GCP region for all regional resources. Tokyo, to sit closest to users."
+  default     = "asia-northeast1"
 }
 
 variable "name_prefix" {
